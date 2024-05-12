@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="music-player">
+            <nav>
+                <div class="circle">
+                    <i class='bx bx-chevron-left'></i>
+                </div>
+                <div class="circle">
+                    <i class='bx bx-menu'></i>
+                </div>
+            </nav>
+            <img src="musicImg.avif" alt="song-img" class="song-img">
+            <h1>Saurabh Kumar</h1>
+            <p>Pata nahi kis roop me aaker narayan mill jayega</p>
+            <audio id="song">
+                <source src="Narayan Mil Jayega.mp3" type="audio/mpeg">
+            </audio>
+            <input type="range" value="0" id="progress">
+
+            <div class="controls">
+                <div><i class='bx bx-fast-forward bx-rotate-180' ></i></div>
+                <div onclick="playPause()"><i class='bx bx-play' id="ctrlIcon"></i></div>
+                <div><i class='bx bx-fast-forward' ></i></div>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        let progress = document.getElementById('progress');
+let song = document.getElementById('song');
+let ctrlIcon = document.getElementById('ctrlIcon');
+
+song.onloadedmetadata = function(){
+    progress.max = song.duration;
+    progress.value = song.currentTime;
+}
+
+function playPause(){
+    if(ctrlIcon.classList.contains("bx-pause")){
+        song.pause();
+        ctrlIcon.classList.remove("bx-pause")
+        ctrlIcon.classList.add("bx-play")
+    }else{
+        song.play();
+        ctrlIcon.classList.add("bx-pause")
+        ctrlIcon.classList.remove("bx-play")
+    }
+}
+
+if (song.play()) {
+    setInterval(()=>{
+        progress.value = song.currentTime;
+    },500)
+}
+progress.onchange = function(){
+    song.play();
+    song.currentTime = progress.value;
+    ctrlIcon.classList.add("bx-pause")
+    ctrlIcon.classList.remove("bx-play")
+}
+
+    </script>
+   
+</body>
+</html>
